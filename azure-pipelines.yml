@@ -5,7 +5,6 @@
 
 trigger:
 - main
-
 pool:
   name: Default
   demands:
@@ -22,3 +21,15 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+- task: oc-cmd@2
+  inputs:
+    connectionType: 'OpenShift Connection Service'
+    openshiftService: 'ARO Connection'
+    version: '4.2'
+    cmd: 'oc start-build java-ex --follow'
+- task: oc-cmd@2
+  inputs:
+    connectionType: 'OpenShift Connection Service'
+    openshiftService: 'ARO Connection'
+    version: '4.2'
+    cmd: 'oc status'
